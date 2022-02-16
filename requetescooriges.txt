@@ -1,0 +1,331 @@
+Requêtes SQL pour l'application « Showroom »
+Requêtes SQL à préparer et à tester individuellement Test ?
+
+25), 27) , 32), 34), 38), 42).
+ Profils et comptes :
+1. Requêtes d'ajout des données d'un profil + compte associé
+INSERT INTO T_COMPTE_UTILISATEUR_CPT  (CPT_PSEUDO, CPT_MOT_DE_PASSE)
+       VALUES ('Ashley', MD5('mandarine'));
+
+INSERT T_PROFIL_UTILISATEUR_PRO (CPT_PSEUDO, PRO_NOM , PRO_prenom , PRO_mail , PRO_DATE_CREATION , PRO_validite ,  PRO_statu ) 
+       VALUES ('Ashley','Wini', 'Diana', 'diana@gmail.com','2019-11-18 20:52:23', 'A' , 'R');
+
+
+2. Requête de vérification des données de connexion (pseudo et mot de passe), c’est à dire
+requête qui vérifie l’existence (ou non) du couple pseudo / mot de passe dans la base
+SELECT *
+FROM T_COMPTE_UTILISATEUR_CPT
+WHERE CPT_PSEUDO = 'Tuxie' AND CPT_MOT_DE_PASSE = MD5('Saida19');
+
+
+3. Requête de récupération de toutes les données d'un profil (dont on connaît le pseudo)
+SELECT *
+FROM T_PROFIL_UTILISATEUR_PRO
+WHERE CPT_PSEUDO = 'gestionnaire1';
+
+
+4. Requête permettant de connaître le statut d’un utilisateur dont on connaît le nom et le
+prénom
+SELECT pro_statu,CPT_PSEUDO,pro_nom,pro_prenom
+from T_PROFIL_UTILISATEUR_PRO
+WHERE pro_nom = 'Sanfo'
+and pro_prenom = 'Ouzeifa';
+
+
+5. Requête de modification des données d'un profil (pseudo connu)PARTIEL
+UPDATE T_PROFIL_UTILISATEUR_PRO
+set pro_nom = 'Dianka',
+pro_prenom = 'Mustapha',
+pro_mail = 'mustaphadianka@gmail.com',
+pro_statu = 'D',
+pro_validite = '1'
+WHERE CPT_PSEUDO='coco12';
+
+6. Requête de mise à jour du mot de passe d'un compte (pseudo connu)
+UPDATE T_COMPTE_UTILISATEUR_CPT
+set cpt_mot_de_passe = MD5('test')
+WHERE CPT_PSEUDO='coco12';
+
+7. Requête listant toutes les données des profils + comptes associés
+SELECT * 
+FROM T_PROFIL_UTILISATEUR_PRO
+JOIN T_COMPTE_UTILISATEUR_CPT USING(CPT_PSEUDO)
+
+
+8. Requête de validation d'un profil (pseudo connu)
+UPDATE T_PROFIL_UTILISATEUR_PRO
+SET T_PROFIL_UTILISATEUR_PRO.PRO_validite='A'
+WHERE T_PROFIL_UTILISATEUR_PRO.CPT_PSEUDO= 'banana12' ;
+
+
+9. Requête de désactivation (/activation) d'un profil (pseudo connu)
+UPDATE T_PROFIL_UTILISATEUR_PRO
+SET T_PROFIL_UTILISATEUR_PRO.PRO_statu='D'
+WHERE T_PROFIL_UTILISATEUR_PRO.CPT_PSEUDO= 'banana12' ;
+
+
+
+
+
+
+ Présentation :
+10. Requête d’ajout des informations de la structure
+INSERT T_PRESENTATION_PRES (CPT_PSEUDO,PRES_ID , PRES_NOM_STRUCTURE , PRES_ADESSE, PRES_telephone , PRES_mail  , PRES_HORAIRE ,  PRES_TEXTE_BIENVENUE) 
+       VALUES ('coco12',null, 'BOOTAMA', '17 RUE DU LION', '0752256471' , 'bootama@gmail.com','11h00-23h30', 'BIENVENUE CHEZ BOOTAMA!goût et couleurs dans vos assiettes!');
+
+
+11. Requête vérifiant qu’il n’y a qu’une seule ligne dans la table de gestion de la présentation????????????????????????????????????
+SELECT * 
+FROM T_PRESENTATION_PRES
+WHERE 1= (SELECT COUNT(*) FROM T_PRESENTATION_PRES)
+
+
+
+12. Requête donnant les informations sur la structure
+SELECT * 
+FROM T_PRESENTATION_PRES
+
+
+13. Requête de modification de l’adresse, du n° de téléphone et de l’adresse e-mail de la
+structure
+UPDATE T_PRESENTATION_PRES
+set PRES_ADESSE = '47 rue gingimbre',
+PRES_telephone = 0785941287,
+PRES_mail = 'nado@gmail.com'
+
+
+14. Requête de suppression de toutes les informations de la structure
+
+truncate pres_presentation_pres
+
+
+
+
+ Actualités :
+15. Requête d'ajout d'une actualité
+INSERT T_ACTUALITE_ACT (ACT_ID , CPT_PSEUDO,ACT_TITRE , ACT_Texte , ACT_DATE_PUBLICATION , ACT_ETAT ) 
+       VALUES (null,'vanille12', 'Du nouveau!', 'Le Ndole!...','2019-08-28 20:52:23','1');
+
+
+16. Requête donnant la dernière actualité ajoutée
+SELECT * from T_ACTUALITE_ACT
+where ACT_ID = (
+SELECT MAX(ACT_ID) FROM T_ACTUALITE_ACT)
+
+ou
+
+SELECT *
+FROM T_ACTUALITE_ACT
+ORDER BY ACT_ID DESC 
+LIMIT 1;
+
+
+17. Requête listant toutes les actualités et leur auteur
+SELECT * from T_ACTUALITE_ACT
+join T_PROFIL_UTILISATEUR_PRO USING(CPT_PSEUDO)
+
+
+
+18. Requête listant les 5 dernières actualités ajoutées et leur auteur
+SELECT * from T_ACTUALITE_ACT
+JOIN T_PROFIL_UTILISATEUR_PRO USING(CPT_PSEUDO)
+WHERE ACT_ID <= (SELECT max(ACT_ID) from T_ACTUALITE_ACT) 
+AND ACT_ID >(SELECT (max(ACT_ID) - 5) from T_ACTUALITE_ACT)
+
+ou
+
+SELECT *
+FROM T_ACTUALITE_ACT
+ORDER BY act_id DESC 
+LIMIT 5;
+
+
+19. Requête de modification d'une actualité
+UPDATE T_ACTUALITE_ACT
+SET ACT_TITRE = 'Le Togo!',
+ACT_Texte = 'Le Donkounou accompagné de sa sauce et ses oignons crues!',
+ACT_ETAT = 0
+WHERE ACT_ID = 3;
+
+
+20. Requête de suppression d'une actualité à partir de son ID (n°)
+DELETE FROM T_ACTUALITE_ACT
+where ACT_ID=1
+
+
+21. Requête de désactivation de toutes les actualités publiées avant une certaine date
+(archivage des actualités trop anciennes)
+UPDATE T_ACTUALITE_ACT 
+    SET ACT_ETAT=0
+    WHERE ACT_DATE_PUBLICATION < '2019/08/30';
+
+
+
+
+
+
+ Sélections / éléments (+ liens) :
+22. Requête d'ajout d'une sélection
+INSERT t_selection_sel (CPT_PSEUDO , SEL_INTITULE , SEL_TEXTE_INTRODUCTIF , SEL_DATE_AJOUT  ) 
+       VALUES ('karite12', 'Entrées', 'Découverte!','2019-03-31 20:52:23');
+
+
+23. Requête listant tous les éléments d’une sélection particulière
+(pour inserer des valeurs dans la table de jointure
+sel ele
+INSERT INTO TA_SELECTION_SEL
+VALUES (2,3);
+)
+
+SELECT *
+FROM T_ELEMENT_ELE
+WHERE ele_id IN (SELECT ele_id
+                     FROM TA_SELECTION_SEL
+                     WHERE sel_id = 2);
+
+
+24. Requête comptant le nombre de sélections qui existent dans la base de données
+SELECT COUNT(*) FROM t_selection_sel
+
+
+25. Requête listant toutes les sélections et leurs éléments éventuels (+ lien(s))
+******************
+SELECT sel_id, sel_intitule, ele_id, ele_descriptif, lien_url
+FROM t_selection_sel 
+LEFT OUTER JOIN TA_SELECTION_SEL USING (sel_id)
+LEFT OUTER JOIN T_ELEMENT_ELE USING (ele_id)
+LEFT OUTER JOIN T_LIEN USING (ele_id);
+******************
+
+
+26. Requête de modification d'une sélection
+UPDATE t_selection_sel
+    SET SEL_TEXTE_INTRODUCTIF="les beignets a la farine et à la banane!"
+    WHERE SEL_ID=4;
+
+27. Requête(s) de suppression d'une sélection à partir de son identifiant (ID)
+DELETE FROM TA_SELECTION_SEL WHERE sel_id=6;
+DELETE FROM t_selection_sel WHERE sel_id=6;
+
+
+28. Requête listant toutes les sélections qui n’ont pas d’élément associé
+SELECT *
+FROM t_selection_sel
+WHERE sel_id NOT IN (SELECT sel_id
+                         FROM TA_SELECTION_SEL);
+
+29. Requête récupérant toutes les données d’un élément dont on connaît l’identifiant (ID)
+SELECT * from T_ELEMENT_ELE
+WHERE ELE_ID = 1
+
+30. Requête d'ajout d'un élément pour une sélection particulière (ID connu)
+INSERT into T_ELEMENT_ELE (ELE_ID , ELE_INTITULE , ELE_DESCRIPTIF , ELE_DATE_AJOUT , ELE_IMAGE ,ELE_ETAT ) 
+       VALUES (null, 'Mouikolgo', 'Riz a base de soumbala accompagné de poulet ou de poisson fumé!','2019-08-28 20:52:23','image','c');
+
+
+31. Requête(s) de suppression d'un élément particulier (ID connu)
+
+DELETE from T_ELEMENT_ELE
+WHERE ELE_ID = 1;
+
+
+32. Requête donnant l’ID de l’élément suivant connaissant l’ID de l’élément actuel choisi
+dans une sélection d’ID connu (puis même chose pour l’élément précédent)
+*****suivant**
+SELECT ele_id
+FROM TA_SELECTION_SEL
+WHERE ele_id > 6
+AND sel_id = 1
+ORDER BY ele_id ASC
+LIMIT 1;
+**************
+********precedent******
+SELECT ele_id
+FROM TA_SELECTION_SEL
+WHERE ele_id < 7
+AND sel_id = 1
+ORDER BY ele_id DESC
+LIMIT 1;
+*****************
+
+
+33. Requête de modification d'un élément d'une sélection particulière (ID connus)
+UPDATE T_ELEMENT_ELE	
+SET ELE_INTITULE ='sauce oignons'
+WHERE ele_id = 3 AND ele_id IN  (SELECT ele_id
+                                              FROM TA_SELECTION_SEL
+                                        WHERE sel_id = 2);
+
+34. Requête(s) de suppression de tous les éléments d’une sélection particulière (ID connu)
+DELETE FROM TA_SELECTION_SEL
+WHERE sel_id = 2;
+
+
+35. Requête de suppression de toutes les sélections n’ayant pas d’élément associé
+DELETE FROM t_selection_sel
+WHERE sel_id NOT IN (SELECT sel_id
+                         FROM ta_selection_sel);
+
+36. Requête de désactivation (remise à l’état brouillon) d’un élément particulier (ID connu)
+UPDATE  T_ELEMENT_ELE
+SET ele_etat = '0'
+WHERE ELE_ID = 1;
+
+37. Requête cachant tous les éléments ajoutés par un utilisateur particulier dont on connaît
+le pseudo
+update t_element_ele 
+join t_jointure_join using(ele_id)
+join t_selection_sel using(sel_id)
+set ele_etat='0'
+where cpt_pseudo='gestionnaire1'
+
+
+38. Requête qui récupère toutes les données associées (sans oublier les liens) à une
+sélection particulière dont on connaît l’identifiant (ID)
+
+SELECT sel_id, sel_intitule, ele_id, ele_descriptif, lien_URL
+FROM t_selection_sel 
+LEFT JOIN TA_SELECTION_SEL USING (sel_id)
+LEFT JOIN T_ELEMENT_ELE USING (ele_id)
+LEFT JOIN T_LIEN USING (ele_id)
+WHERE sel_id=1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Liens :
+39. Requête ajoutant un lien pour l’élément choisi
+
+40. Requête de suppression d’un lien dont on connaît l’URL
+delete from t_lien
+where lien_url="https://www.instagram.com/b.o.o.t.a.m.a/"
+
+41. Requête listant toutes les URL des liens de la base, sans redondance
+SELECT distinct(lien_url)
+    FROM t_lien;
+42. Requête listant tous les éléments, leur sélection et les URL des liens, s’il y en a
+SELECT ele_id, ele_descriptif, sel_id, sel_intitule, lien_URL
+FROM t_selection_sel
+JOIN TA_SELECTION_SEL USING (sel_id)
+JOIN T_ELEMENT_ELE USING (ele_id)
+LEFT JOIN T_LIEN USING (ele_id);
+
+43. Requête listant les URL des liens associés à un élément dont on connaît l’identifiant (ID)
+select ele_Id,lien_url from t_lien
+join t_element_ele using(ele_Id)
+where ele_Id=1
+44. Requête qui vérifie l’existence (ou non) d’une URL d’un lien parmi les URL qui existent
+SELECT lien_url from t_lien
+where lien_Url like'%https://www.cidj.com/metiers/mecanicien-mecanicienne-auto%'
+
+
