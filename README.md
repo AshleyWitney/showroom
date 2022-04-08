@@ -48,6 +48,20 @@ L'exercice 3 a le même esprit que l'exercice précédent, il consiste à améli
 
 
 ### Exercice 4 : Sélection et exécution des commandes
+#### Exercice 4.1 : Référencement des objets et enregistrement des commandes
+
+
+
+’exercice 4.1 l’utilisateur saisit les scripts au clavier et on a la création de deux classes 
+Environnement() et Référencer() 
+La classe Environnement() contient les références space et robi.
+La classe Référence() consiste à référencer un objet graphique pour des commandes 
+nommées.
+L’exercice 4.2
+C’est la suite de l’exercie4.1 mais aussi permet l’ajout de nouveaux éléments(Oval,Image 
+et Chaine de caractère) et la suppression de ces derniers.
+On a rajouté les classes corselets(), SetColorSpace(), Translate(), Sleep() ,AddElement(), 
+DelElement(), SetDim(), NewImage() et NewString().
 
 
 ## PARTIE CLIENT SERVEUR
