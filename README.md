@@ -21,10 +21,15 @@ Le client ROBI saisit un programme ROBI et l'envoi vers un serveur ROBI. Nous av
 
 ### Exercice 1 : Prise en main de la couche graphique
 Cet exercice consiste à mener le robi à faire les mouvements suivants :
+
 • Déplacement de robi jusqu’au bord droit
+
 • Déplacement jusqu’au bord bas
+
 • Déplacement jusqu’au bord gauche
+
 • Déplacement jusqu’au bord haut
+
 • Et à changer la couleur du robi avec une couleur aléatoire
 
 ### Exercice 2 : Première version d’un interpréteur de script
@@ -41,7 +46,9 @@ L'exercice 3 a le même esprit que l'exercice précédent, il consiste à améli
 
 
 ### Exercice 4 : Sélection et exécution des commandes
+
 L'idée de l"exercice 4 est de travailler avec plus d'objets(oval, String etc), en utilisant les classes environnement et les références qui contiennent les références des objets crées.
+
 #### Exercice 4.1 : Référencement des objets et enregistrement des commandes
 
 L'utilisateur saisie des S-expressions au clavier qui déclenche les classes Environnement() et Référence(). 
