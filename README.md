@@ -12,10 +12,13 @@ KADRI Youssef
 KONATE ASHLEY WITNEY
 
 # DESCRIPTION DU PROJET
+Le Projet de synthèse L3 IFA/CDA  est constituée de deux partie, la première partie consite à développer un prototype de moniteur pour un système de commande pour des éléménts graphiques. Dans la version minimal, il sagit d'une forme géométrique basique(rectangle,ligne,ellipse etc). Le moniteur permettra donc de les installer dans un conteneur et de les animers. 
 
-Le projet de synthèse consiste à un prototype de moniteur pour un système de commande
-pour des éléments représentés graphiquement. 
+## PROJET ROBI 
+### Exercice 1
+### Exercice 2
+### Exercice 3
+### Exercice 4
+### Exercice 5
 
-Dans sa version minimale, un élément 
-visuel est une forme géométrique basique (rectangle, ellipse, ligne, texte…). Le moniteur 
-permet de les installer dans un conteneur et de les animer. 
+## PARTIE CLIENT SERVEUR
