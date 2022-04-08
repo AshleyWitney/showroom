@@ -7,7 +7,12 @@ LERHRIBI Douha
 
 ELAATFI Mohamed
 
-KADRI Youssef
+KADRI Youssef- le nom des auteurs;
+- la liste de ce qui a été rendu avec une petite description succincte;
+- des éléments techniques pour la comprehension de vos solutions et qu'il est difficile de trouver par la seule lecture des commentaires;
+- un bilan critique sur vos choix de conception, de programmation et les solutions que maintenant vous auriez choisies.
+
+- ajoutez ce que vous n'avez pas pu faire
 
 KONATE ASHLEY WITNEY
 
